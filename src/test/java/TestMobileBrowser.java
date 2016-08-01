@@ -58,24 +58,28 @@ import java.util.concurrent.TimeUnit;
             driver.manage().timeouts().pageLoadTimeout(70, TimeUnit.SECONDS);
 
             // Open url
+            System.out.println("open url http://www.google.com ");
             driver.get("http://www.google.com");
 
             // print the title
             System.out.println("Webpage Title = "+driver.getTitle());
 
             // enter text into search window
-            driver.findElement(By.name("q")).sendKeys("fob solutions tallinn");
+            //driver.findElement(By.name("q")).sendKeys("fob solutions tallinn");
 
             // click on google otsing button
-            driver.findElement(By.name("btnG")).click();
+            //driver.findElement(By.name("btnG")).click();
 
-            //make a list of results and get the first one
+            // make a list of results and get the first one
+            // don't work yet ... and not needed
+/*          result = driver.find_elements_by_xpath("//ol[@id='rso']/li")[0];
 
-/*        result = driver.find_elements_by_xpath("//ol[@id='rso']/li")[0];
-        //  //click its href
-        result.find_element_by_xpath("./div/h3/a").click();*/
+            //  //click its href
+            result.find_element_by_xpath("./div/h3/a").click();
+            */
 
             // close the browser
+            System.out.println(" close mobile browser ");
             driver.quit();
 
 
