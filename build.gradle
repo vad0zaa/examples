@@ -2,9 +2,9 @@ group 'testautomation'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-//apply plugin: 'groovy'
+apply plugin: 'groovy'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.7
 
 repositories {
     mavenCentral()
@@ -13,13 +13,14 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.11'
     testCompile group: 'junit', name: 'junit', version: '4.11'
-
-    //testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.53.1'
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.53.1'
+    // testCompile group: 'org.seleniumhq.selenium', name: 'selenium-server-standalone', version: '2.53.1'
 
     testCompile group: 'info.cukes', name: 'cucumber-java', version: '1.2.4'
     testCompile group: 'info.cukes', name: 'cucumber-junit', version: '1.2.4'
     testCompile group: 'info.cukes', name: 'cucumber-jvm', version: '1.2.4'
 
+    testCompile group: 'io.appium', name: 'java-client', version: '3.0.0'
 }
 
 // see stuff Cucumber prints
