@@ -2,19 +2,17 @@ package steps;
 /**
  * Created by vsinchuk on 01-Aug-16.
  */
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.Assert;
-import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,10 +21,14 @@ import java.util.concurrent.TimeUnit;
 
 public class CheckMobileBrowserSteps {
 
-    WebDriver driver;
+    private WebDriver driver;
+    private String device = "Android emulator Nexus5";
+    private String webPageToOpen = "http://www.google.com";
+    private String expectedTitle = "Google";
+    private String title = "";
 
-    @Given("^user otkryvaet browser$")
-    public void openMobileBrowser() throws MalformedURLException {
+    @Before
+    public void getAndroidDriver() throws MalformedURLException {
 
         // Create object of  DesiredCapabilities class and specify android platform
         DesiredCapabilities capabilities=DesiredCapabilities.android();
@@ -43,17 +45,22 @@ public class CheckMobileBrowserSteps {
         // we need to define platform name
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,"Android");
 
-        // Set the device name as well (you can give any name)
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,"vadim android emulator");
+        //android avd 4.4.4 api19 , default browser
+        capabilities.setCapability(MobileCapabilityType.VERSION,"4.4.4");
 
-        //android avd 4.4.2 api19 , default browser
-        capabilities.setCapability(MobileCapabilityType.VERSION,"4.4.2");
-
+        // for single device
         // Create object of URL class and specify the appium server address
-        URL url= new URL("http://127.0.0.1:4723/wd/hub");
+        //URL url= new URL("http://127.0.0.1:4723/wd/hub");
 
+        // for single device
         // Create object of  AndroidDriver class and pass the url and capability that we created
-        driver = new AndroidDriver(url, capabilities);
+        //driver = new AndroidDriver(url, capabilities);
+
+        // set device name
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, device);
+
+        // Create object of  AndroidDriver class and pass url of Selenium Grid server
+        driver = new AndroidDriver(new URL("http://localhost:4444/wd/hub/"), capabilities);
 
         // set timeouts
         driver.manage().timeouts().implicitlyWait(70, TimeUnit.SECONDS);
@@ -61,40 +68,40 @@ public class CheckMobileBrowserSteps {
 
     }
 
-    @When("^on otkryvaet sait$")
-    public void getUrl(){
-        // Open url
-        driver.get("http://www.google.com");
+    @Given("^user otkryvaet browser$")
+    public void getWebPage(){
+
+        driver.get(webPageToOpen);
+
     }
 
-    @Then("^website title dolzen byt Google$")
+    @When("^on proverjaet sait$")
     public void checkElement(){
-
-        String title = "";
-        String correctTitle = "Google";
 
         //get website element
         title = driver.getTitle();
-
-        // print the title
-        System.out.println("Webpage Title = "+driver.getTitle());
 
         // enter text into search window
         //driver.findElement(By.name("q")).sendKeys("fob solutions tallinn");
 
         // click on google otsing button
         //driver.findElement(By.name("btnG")).click();
+    }
 
-        //make a list of results and get the first one
+    @Then("^website title dolzen byt Google$")
+    public void checkTitleIsCorrect(){
 
-/*        result = driver.find_elements_by_xpath("//ol[@id='rso']/li")[0];
-        //  //click its href
-        result.find_element_by_xpath("./div/h3/a").click();*/
+        System.out.println(" device = " + device);
+        System.out.println(" tested web page = " + webPageToOpen);
+        System.out.println(" webpage title = "+ title);
 
-        // close the browser
+        Assert.assertTrue(title.equalsIgnoreCase(expectedTitle));
+    }
+
+    @After
+    public void closeBrowser(){
+
         driver.quit();
 
-        // check if title is correct
-        Assert.assertTrue(title.equalsIgnoreCase(correctTitle));
     }
 }

@@ -6,5 +6,5 @@ Feature:
 
   Scenario:
     Given user otkryvaet browser
-    When on otkryvaet sait
+    When on proverjaet sait
     Then website title dolzen byt Google
