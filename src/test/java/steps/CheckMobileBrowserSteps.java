@@ -66,6 +66,7 @@ public class CheckMobileBrowserSteps {
         driver.manage().timeouts().implicitlyWait(70, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(70, TimeUnit.SECONDS);
 
+        Assert.assertTrue(driver != null);
     }
 
     @Given("^user otkryvaet browser$")
@@ -73,6 +74,8 @@ public class CheckMobileBrowserSteps {
 
         driver.get(webPageToOpen);
 
+        // always true :))
+        Assert.assertTrue(true);
     }
 
     @When("^on proverjaet sait$")
@@ -81,6 +84,8 @@ public class CheckMobileBrowserSteps {
         //get website element
         title = driver.getTitle();
 
+        // fail if did not get title element
+        Assert.assertTrue(! title.equals(""));
         // enter text into search window
         //driver.findElement(By.name("q")).sendKeys("fob solutions tallinn");
 

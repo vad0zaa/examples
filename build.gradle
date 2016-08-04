@@ -2,9 +2,11 @@ group 'testautomation'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'groovy'
+//apply plugin: 'groovy'
 
 sourceCompatibility = 1.7
+
+defaultTasks 'test'
 
 repositories {
     mavenCentral()
@@ -26,6 +28,7 @@ dependencies {
 // see stuff Cucumber prints
 // send command line parameters to the JVM running the tests
 test {
+    dependsOn assemble, compileTestJava
     testLogging.showStandardStreams = true
     systemProperties System.getProperties()
 }
@@ -34,4 +37,20 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.13'
 }
 
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'steps', 'src/test/java/features']
+        }
+    }
+}
 
