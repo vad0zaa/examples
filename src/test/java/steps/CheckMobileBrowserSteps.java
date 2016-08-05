@@ -96,9 +96,13 @@ public class CheckMobileBrowserSteps {
     @Then("^website title dolzen byt Google$")
     public void checkTitleIsCorrect(){
 
+        System.out.println("");
+        System.out.println("-------------------------------");
         System.out.println(" device = " + device);
         System.out.println(" tested web page = " + webPageToOpen);
         System.out.println(" webpage title = "+ title);
+        System.out.println("-------------------------------");
+        System.out.println("");
 
         Assert.assertTrue(title.equalsIgnoreCase(expectedTitle));
     }
