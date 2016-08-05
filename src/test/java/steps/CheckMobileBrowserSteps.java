@@ -66,6 +66,8 @@ public class CheckMobileBrowserSteps {
         driver.manage().timeouts().implicitlyWait(70, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(70, TimeUnit.SECONDS);
 
+        sleep(5000);
+
         Assert.assertTrue(driver != null);
     }
 
@@ -73,6 +75,8 @@ public class CheckMobileBrowserSteps {
     public void getWebPage(){
 
         driver.get(webPageToOpen);
+
+        sleep(5000);
 
         // always true :))
         Assert.assertTrue(true);
@@ -110,7 +114,19 @@ public class CheckMobileBrowserSteps {
     @After
     public void closeBrowser(){
 
+        sleep(2000);
+
         driver.quit();
 
+        sleep(3000);
+    }
+
+    public void sleep(int milliseconds){
+
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            // do nothing
+        }
     }
 }
