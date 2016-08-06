@@ -65,7 +65,7 @@ public class CheckMobileBrowserSteps {
         System.out.println(" web page to test = " + webPageToOpen);
 
         URL url = new URL("http://localhost:4444/wd/hub/");
-        System.out.println(" ...new url = " + url.getPath());
+        System.out.println(" ...new url = " + url.toString());
 
         System.out.println(" ...trying to get AndroidDriver ");
         System.out.println("-------------------------------");
@@ -86,6 +86,7 @@ public class CheckMobileBrowserSteps {
     @Given("^user otkryvaet browser$")
     public void getWebPage(){
 
+        System.out.println("...open web page");
         driver.get(webPageToOpen);
 
         sleep(10000);
@@ -98,6 +99,7 @@ public class CheckMobileBrowserSteps {
     public void checkElement(){
 
         //get website element
+        System.out.println("...get webpage title");
         title = driver.getTitle();
 
         sleep(2000);
@@ -116,7 +118,6 @@ public class CheckMobileBrowserSteps {
 
         System.out.println("");
         System.out.println("-------------------------------");
-        System.out.println(" device = " + device);
         System.out.println(" tested web page = " + webPageToOpen);
         System.out.println(" webpage title = "+ title);
         System.out.println("-------------------------------");
@@ -137,6 +138,7 @@ public class CheckMobileBrowserSteps {
             sleep(5000);
             System.out.println("...quit session");
             driver.quit();
+            sleep(2000);
         }
 
     }
