@@ -59,6 +59,18 @@ public class CheckMobileBrowserSteps {
         // set device name
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, device);
 
+        System.out.println("");
+        System.out.println("-------------------------------");
+        System.out.println(" device = " + device);
+        System.out.println(" web page to test = " + webPageToOpen);
+
+        URL url = new URL("http://localhost:4444/wd/hub/");
+        System.out.println(" ...new url = " + url.getPath());
+
+        System.out.println(" ...trying to get AndroidDriver ");
+        System.out.println("-------------------------------");
+        System.out.println("");
+
         // Create object of  AndroidDriver class and pass url of Selenium Grid server
         driver = new AndroidDriver(new URL("http://localhost:4444/wd/hub/"), capabilities);
 
@@ -66,7 +78,7 @@ public class CheckMobileBrowserSteps {
         driver.manage().timeouts().implicitlyWait(70, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(70, TimeUnit.SECONDS);
 
-        sleep(5000);
+        sleep(10000);
 
         Assert.assertTrue(driver != null);
     }
@@ -76,7 +88,7 @@ public class CheckMobileBrowserSteps {
 
         driver.get(webPageToOpen);
 
-        sleep(5000);
+        sleep(10000);
 
         // always true :))
         Assert.assertTrue(true);
@@ -87,6 +99,8 @@ public class CheckMobileBrowserSteps {
 
         //get website element
         title = driver.getTitle();
+
+        sleep(2000);
 
         // fail if did not get title element
         Assert.assertTrue(! title.equals(""));
@@ -114,11 +128,17 @@ public class CheckMobileBrowserSteps {
     @After
     public void closeBrowser(){
 
-        sleep(2000);
 
-        driver.quit();
+        if(driver != null) {
 
-        sleep(3000);
+            System.out.println("...close browser");
+            driver.close();
+
+            sleep(5000);
+            System.out.println("...quit session");
+            driver.quit();
+        }
+
     }
 
     public void sleep(int milliseconds){
